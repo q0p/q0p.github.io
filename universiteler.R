@@ -4,7 +4,7 @@ library(dplyr)
 library(ggplot2)
 library(ggmap)
 
-url <- "https://tr.wikipedia.org/wiki/Türkiye'deki_üniversiteler_listesi"
+url <- "https://tr.wikipedia.org/wiki/TÃ¼rkiye'deki_Ã¼niversiteler_listesi"
 
 devlet <- url %>%
   read_html() %>%
@@ -40,7 +40,7 @@ universiteler2 <- filter(universiteler, !is.na(Ogrenci))
 ggplot(universiteler2, aes(x=Kurulus, y=Ogrenci, color=Tur)) +
   geom_point() + 
   xlab("Kurulus Yili") +
-  ylab("Ögrenci Sayisi") +
+  ylab("Ã–grenci Sayisi") +
   geom_text(aes(label = Ad))
 
 ggplot(universiteler2, aes (x=Kurulus, y=Ogrenci)) +
@@ -49,8 +49,6 @@ ggplot(universiteler2, aes (x=Kurulus, y=Ogrenci)) +
 
 universiteler2 %>%
   mutate(lonlat = geocode(Ad))
-
-loc <- "Istanbul"
 
 showonmap <- function(loc, zm = 8, ext = "device") {
   # Map location
@@ -66,4 +64,3 @@ unitoshow <- universiteler2 %>% filter(Il == sehir, Kurulus > 1900)
 my_map + geom_point(data = unitoshow, aes(x=lon, y=lat, size = 1, col = "red" ))
 
 save(universiteler, file="unidata.RData")
-save(universiteler2, file="uni2.RData")
